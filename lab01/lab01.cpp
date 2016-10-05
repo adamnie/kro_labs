@@ -18,26 +18,15 @@ int main(int argc, char const *argv[])
 		return (el % 2 == 0);
 	});
 
-	int min = INT_MAX;
-	int max = INT_MIN;
+	cout << "Odd numbers count: " << c_odds << endl;
 
-	for (int i = 0; i < cols*rows; ++i)
-	{
-		if(min > p_mat[i])
-			min = p_mat[i];
-		if(max > p_mat[i])
-			max = p_mat[i];
-	}
+	auto result_minmax = minmax_element(begin(p_mat), end(p_mat));
 
-	// int c_filt = 0;
-	//
-	// for (int i = 0; i < cols*rows; ++i)
-	// {
-	// 	if(p_mat[i] < 45 || p_mat[i] > -45)
-	// 		c_filt++;
-	// }
-	//
-	// delete[] p_mat;
+	cout << "Min: " << *result_minmax.first << "\nMax: " << *result_minmax.second << endl;
+
+	auto lower_limit, higher_limit;
+
+	auto filter = []
 
 	return 0;
 }
