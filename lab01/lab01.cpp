@@ -24,9 +24,19 @@ int main(int argc, char const *argv[])
 
 	cout << "Min: " << *result_minmax.first << "\nMax: " << *result_minmax.second << endl;
 
-	auto lower_limit, higher_limit;
+	int lower_limit, higher_limit;
 
-	auto filter = []
+	lower_limit = -45; higher_limit = 45;
+
+	auto filter = [lower_limit, higher_limit](int value){
+		return value < lower_limit || value > higher_limit;
+	};
+
+	p_mat.erase(remove_if(begin(p_mat), end(p_mat), filter), end(p_mat));
+
+	int c_filtered = p_mat.size();
+
+	cout << "No. of elements after filtering: " << c_filtered << endl;
 
 	return 0;
 }

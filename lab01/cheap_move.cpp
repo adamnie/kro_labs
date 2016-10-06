@@ -6,11 +6,11 @@ struct cheap_move {
 };
 struct test_type {
   test_type(test_type const&)=default;
-  //test_type(test_type &&)=default;
+  test_type(test_type &&)=default;
 
   // can construct from a cheap_move via either copy or move:
   test_type(cheap_move const&y):x(y){}
-  //test_type(cheap_move &&y):x(std::move(y)){}
+  test_type(cheap_move &&y):x(std::move(y)){}
 
   cheap_move x;
 };
