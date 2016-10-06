@@ -19,7 +19,8 @@ std::map<std::string, int> get_map(void){
 
 int main(int argc, char const *argv[]) {
       std::vector<int> arr = {12, 33, 42, 67};
-      if (auto it = find(std::begin(arr), std::end(arr), 33); it != arr.end()) { send_item(*it); }
+      auto it = find(std::begin(arr), std::end(arr), 33);
+      if (it != arr.end()) { send_item(*it); }
       for(auto& [k,v]: get_map()) std::cout << "key=" << k << ", value=" << v << std::endl;
       return 0;
 }
