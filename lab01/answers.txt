@@ -1,0 +1,21 @@
+5. W przypadku gcc-6 nie wykonało się wywołanie f(false) ze względu
+  na niedozwolone rzutowanie bool -> pointer  (4.8 rzuca tylko warning)
+
+  W przypadku dopisania dodatkowej funkcji o takiej samej nazwie
+  (overload, z argumentem typu int), argument false jest uznawany za poprawny (false -> 0 (int))
+  natomiast przestaje działać dla argumentu NULL:
+    <i>call of overloaded ‘f(NULL)’ is ambiguous</i>
+  ponieważ NULL jest zarówno wartością liczbową, jak i może zostać castowany na pointer.
+  Rozwiązaniem jest zastosowanie nullptr zamiast NULL.
+
+7. Kod pokazuje działanie (Named) Return Value Optimization. Zbędne kopiowanie
+  jest pomijane przez kompilator w celu optymalizacji (copy elision). Jeżeli dobrze rozumiem, to jeżeli
+  kompilator "widzi", że dany spełniające wymagane kryteria już istnieje kopiuje do niego referencje, zamiast
+  tworzyć nowy.Zastosowanie flagi: -fno-elide-constructors wyłącza tę opcję optymalizacyjną, przez co za cenę potencjalnie
+  wolniejszego kodu zyskujemy większą kontrolę nad kodem, tzn. jeżeli występują jakieś side effects
+  podczas wywołania konstruktora (a nie powinny, bo nie powinno się tak pisać) to zostaną one wykonane.
+
+8. W tym przypadku mamy do czynienia z przeładowanym konstruktorem, wołanym podczas rzutowania gdy zwracana jest wartość
+  funkcji test_func. Zakomentowany konstruktor jest dwukrotnie szybszy od odkomentowanego. Jest tak dlatego, że
+  unikamy kopiowania, używając std::move kopiujemy jedynie wskaźnik, co biorąc pod uwagę rozmiar struktury cheap_move
+  przyspiesza działanie kodu. W skrócie: wywołanie move constructor jest szybsze niż copy constructor.
