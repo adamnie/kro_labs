@@ -14,7 +14,7 @@ def index(request):
 
 def show_category(request):
 
-    category = Category.objects.get(id=request.GET.id)
+    category = Category.objects.get(id=request.GET.get('id'))
 
     return render_to_response('category.html',
         {
@@ -24,9 +24,9 @@ def show_category(request):
 
 def show_post(request):
 
-    post = Blog.objects.get(id=request.GET.id)
+    post = Blog.objects.get(id=request.GET.get('id'))
 
-    return render_to_response('category.html',
+    return render_to_response('post.html',
         {
             'title': post.title,
             'body': post.body,
