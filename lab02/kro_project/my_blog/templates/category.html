@@ -1,14 +1,17 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>categories</title>
-  </head>
-  <body>
+{% extends 'base.html' %}
+
+{% block content %}
+
     <h2>Category:</h2><h1> {{ title }}</h1>
     <h2>Description:</h2>
     <p>
       {{ body }}
     </p>
-  </body>
-</html>
+
+    <h2>Members:</h2>
+    <ul>
+      {% for post in posts_in_category %}
+        <li><a href="/blogapp/post?id={{ post.id }}">{{ post.title }}</a></li>
+      {% endfor %}
+    </ul>
+{% endblock %}

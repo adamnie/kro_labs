@@ -21,9 +21,10 @@ from django.conf.urls import include, url
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^blogapp/category', 'my_blog.views.show_category', name='mainview'),
-    url(r'^blogapp/post', 'my_blog.views.show_post', name='mainview'),
-    url(r'^blogapp/', 'my_blog.views.index', name='mainview')
+    url(r'^blogapp/category', 'my_blog.views.show_category', name='single_category'),
+    url(r'^blogapp/post', 'my_blog.views.show_post', name='single_post'),
+    url(r'^blogapp/', 'my_blog.views.index', name='mainview'),
+    url(r'^', 'my_blog.views.index', name="default_view")
 ]
 
 if settings.DEBUG:

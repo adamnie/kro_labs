@@ -16,10 +16,13 @@ def show_category(request):
 
     category = Category.objects.get(id=request.GET.get('id'))
 
+    posts = Blog.objects.filter(category=category.id)
+
     return render_to_response('category.html',
         {
             'title': category.title,
-            'body': category.body
+            'body': category.body,
+            'posts_in_category': posts
         })
 
 def show_post(request):
@@ -31,5 +34,5 @@ def show_post(request):
             'title': post.title,
             'body': post.body,
             'category': post.category,
-            'date': post.date
+            'posted': post.posted
         })
