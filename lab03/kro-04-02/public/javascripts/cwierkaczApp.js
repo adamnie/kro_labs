@@ -1,7 +1,7 @@
 var app = angular.module('cwierkaczApp', ['ngRoute', 'ngResource']).run(function($rootScope, $http) {
 	$rootScope.authenticated = false;
 	$rootScope.current_user = '';
-	
+
 	$rootScope.logout = function(){
     	$http.post('auth/logout');
     	$rootScope.authenticated = false;
@@ -32,7 +32,7 @@ app.factory('postService', function($resource){
 app.controller('mainController', function(postService, $scope, $rootScope){
 	$scope.posts = postService.query();
 	$scope.newPost = {created_by: '', text: '', created_at: ''};
-	
+
 	$scope.post = function() {
 	  $scope.newPost.created_by = $rootScope.current_user;
 	  $scope.newPost.created_at = Date.now();
@@ -56,6 +56,7 @@ app.controller('authController', function($scope, $http, $rootScope, $location){
       }
       else{
         $scope.error_message = data.message;
+				alert(data.msg);
       }
     });
   };
