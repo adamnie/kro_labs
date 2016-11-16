@@ -33,28 +33,27 @@ def  partition_into_chunks(all_data, chunk_size=5):
     number_of_chunks = math.ceil(float(len(all_data)) / float(chunk_size))
     chunked_data = []
 
-    for chunk_num in range(number_of_chunks):
+    for chunk_num in range(int(number_of_chunks)):
         chunk = all_data[chunk_num*chunk_size:chunk_num*chunk_size+chunk_size]
         chunked_data.append(chunk)
 
     return chunked_data
 
-def calculate_moving_mean(data):
-    N = range(len(data))
-    moving_mean = np.convolve(x, np.ones((N,))/N)[(N-1):]
-    print (moving_mean)
+def moving_average(data, chunk_size=5) :
+    ret = np.cumsum(a, dtype=float)
+    ret[n:] = ret[n:] - ret[:-n]
+    return ret[n - 1:] / n
 
-    return moving_mean
-
-def calculate_linear_regression_slope (data):
-    slope, intercept, r_value, p_value, std_err = stats.linregress(x,y)
+def calculate_linear_regression_slope (X,Y):
+    slope, intercept, r_value, p_value, std_err = stats.linregress(X, Y)
+    print(slope)
     return slope
 
 def get_data_trend(data):
     last_entry = data[-1]
     lin_reg_slope = calculate_linear_regression_slope(data)
-    moving_mean = calculate_moving_mean(data)
-    return (moving_mean < last_entry, lin_reg_slope >= 0)
+    moving_average = moving_average(data)
+    return (moving_average[-1] > moving_average[-2], lin_reg_slope >= 0)
 
 
 data = load_data('./data/table_dell.csv')
@@ -64,4 +63,4 @@ chunked_data = partition_into_chunks(data)
 print ("Chunked data length: ", len(chunked_data))
 
 
-calculate_moving_mean([1,2,3,4])
+print(get_data_trend([1, 2, 3, 4]))
